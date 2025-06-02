@@ -26,19 +26,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image with SHA and latest tags
+      - name: Build and push Docker image with short SHA and latest tags
         run: |
           IMAGE_NAME=tnhmar/spring-hello-app
-          IMAGE_TAG=${{ github.sha:0:12 }}
-          
-          # Build the image with the SHA tag
+          IMAGE_TAG=$(echo "${GITHUB_SHA}" | cut -c1-12)
+
+          # Build the image with the short SHA tag
           docker build -t $IMAGE_NAME:$IMAGE_TAG .
-          
+
           # Tag the same image as 'latest'
           docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest
-          
+
           # Push both tags
           docker push $IMAGE_NAME:$IMAGE_TAG
           docker push $IMAGE_NAME:latest
+      
 
 
