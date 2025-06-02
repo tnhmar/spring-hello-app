@@ -28,5 +28,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-hello-app:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/spring-hello-app:latest
+          IMAGE_TAG=${{ github.sha }}
+          docker build -t tnhmar/spring-hello-app:$IMAGE_TAG .
+          docker push tnhmar/spring-hello-app:$IMAGE_TAG
+
