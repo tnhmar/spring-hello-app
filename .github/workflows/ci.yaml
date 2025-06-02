@@ -29,7 +29,7 @@ jobs:
       - name: Build and push Docker image with SHA and latest tags
         run: |
           IMAGE_NAME=tnhmar/spring-hello-app
-          IMAGE_TAG=${{ github.sha }}
+          IMAGE_TAG=${{ github.sha }} | cut -c1-12
           
           # Build the image with the SHA tag
           docker build -t $IMAGE_NAME:$IMAGE_TAG .
